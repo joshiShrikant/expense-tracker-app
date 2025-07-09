@@ -1,0 +1,21 @@
+.register-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}

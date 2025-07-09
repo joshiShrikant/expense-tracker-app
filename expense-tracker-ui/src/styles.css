@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* styles.css */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"; /* Light Theme base */
+
+.dark-theme {
+  --primary-color: #90caf9;
+  --accent-color: #f48fb1;
+  background: #121212;
+  color: #e0e0e0;
+}
+.dark-theme .mat-drawer {
+  background-color: #1e1e1e;
+  color: #e0e0e0 !important;
+}
+
+.dark-theme body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.light-theme {
+  background-color: #fafafa;
+  color: #212121;
+}
+.light-theme body {
+  background-color: #fafafa;
+  color: #212121;
+}
+.dark-theme .mat-toolbar {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+.light-theme .mat-toolbar {
+    background-color: #1976d2;
+    color: white;
+}

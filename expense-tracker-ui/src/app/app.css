@@ -1,0 +1,85 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+a.mat-button {
+  color: white;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+a.mat-button.active-link {
+  border-bottom: 2px solid white;
+}
+
+
+/* for side nav */
+
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+}
+
+.sidenav-header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  background-color: #1976d2;
+}
+
+.main-content {
+  padding: 24px;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.hide-desktop {
+  display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .sidenav {
+    width: 200px;
+  }
+
+  .hide-desktop {
+    display: inline-flex;
+  }
+
+  mat-sidenav {
+    position: absolute;
+    z-index: 1000;
+  }
+}
+
+
+
+.flex-grow {
+  flex: 1;
+}
+
+body.dark-theme mat-sidenav,
+body.dark-theme mat-toolbar,
+body.dark-theme mat-card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.light-theme mat-card {
+  background-color: white;
+}
