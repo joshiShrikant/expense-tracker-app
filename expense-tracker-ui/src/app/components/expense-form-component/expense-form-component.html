@@ -1,0 +1,59 @@
+<h2>{{ isEditMode ? 'Edit Expense' : 'Add New Expense' }}</h2>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="expense-form-container">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>ExpenseName</mat-label>
+    <input matInput formControlName="expenseName" required />
+    <mat-error *ngIf="form.get('expenseName')?.hasError('required')">
+      ExpenseName is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>ExpenseAmount</mat-label>
+    <input matInput type="number" formControlName="expenseAmount" required />
+    <mat-error *ngIf="form.get('expenseAmount')?.hasError('required')">
+      ExpenseAmount is required
+    </mat-error>
+    <mat-error *ngIf="form.get('expenseAmount')?.hasError('min')">
+      ExpenseAmount must be greater than 0
+    </mat-error>
+  </mat-form-field>
+
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Expense Date</mat-label>
+  <input matInput [matDatepicker]="picker" formControlName="expenseDate" required />
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+
+  <mat-error *ngIf="form.get('expenseDate')?.hasError('required')">
+    Expense Date is required
+  </mat-error>
+</mat-form-field>
+
+
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Main Category</mat-label>
+  <mat-select formControlName="mainCategory" (selectionChange)="onMainCategoryChange($event.value)">
+    <mat-option *ngFor="let cat of mainCategories" [value]="cat">{{ cat }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Sub Category</mat-label>
+  <mat-select formControlName="subCategory">
+    <mat-option *ngFor="let sub of subCategories" [value]="sub">{{ sub }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      Submit
+    </button>
+    <button mat-button color="warn" type="button" routerLink="/expenses">
+      Cancel
+    </button>
+  </div>
+</form>

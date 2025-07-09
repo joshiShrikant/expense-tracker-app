@@ -1,0 +1,44 @@
+/* Center the form on the screen */
+.expense-form-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Make all form fields take full width */
+.full-width {
+  width: 100%;
+}
+
+/* Center the form title */
+.form-title {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Buttons aligned horizontally */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .expense-form-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

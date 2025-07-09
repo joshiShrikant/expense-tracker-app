@@ -1,0 +1,57 @@
+<mat-toolbar color="primary" class="navbar">
+  <span class="logo" routerLink="/" style="cursor: pointer;">💰 Expense Tracker</span>
+  
+  <span class="spacer"></span>
+
+ <!-- <a mat-button routerLink="/dashboard"><mat-icon>dashboard</mat-icon>&nbsp;Dashboard</a>
+<a mat-button routerLink="/expenses"><mat-icon>list</mat-icon>&nbsp;Expenses</a>
+<a mat-button routerLink="/expenses/add"><mat-icon>add</mat-icon>&nbsp;Add</a> -->
+ <div *ngIf="isLoggedIn" class="user-info">
+   <span class="username">Welcome, {{ userDetails.username }}</span>
+   <img class="avatar" [src]="userDetails.avatar" alt="User Avatar">
+   <button mat-button (click)="logout()">Logout</button>
+</div>
+<div *ngIf="!isLoggedIn" class="user-info">
+  <button mat-button routerLink="/login">Login</button>
+</div>
+ 
+ <mat-icon>light_mode</mat-icon>
+  <mat-slide-toggle [checked]="isDarkMode" (change)="toggleTheme()">
+  </mat-slide-toggle>
+</mat-toolbar>
+
+
+<!-- <router-outlet></router-outlet> -->
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+    <!-- <mat-toolbar class="sidenav-header">💰 Expenses</mat-toolbar> -->
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/expenses" routerLinkActive="active-link">
+        <mat-icon>list</mat-icon>
+        <span>Expenses</span>
+      </a>
+      <a mat-list-item routerLink="/expenses/add" routerLinkActive="active-link">
+        <mat-icon>add</mat-icon>
+        <span>Add Expense</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()" class="hide-desktop">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Expense Tracker</span>
+    </mat-toolbar> -->
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
