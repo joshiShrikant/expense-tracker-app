@@ -23,8 +23,6 @@ public class Expense {
 	private Long id;
 	
 	private String expenseName;
-	
-	private String expenseCategory;
 
 	private String expenseDate;
 
@@ -33,4 +31,9 @@ public class Expense {
 	private String mainCategory;
 
 	private String subCategory;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+
 }

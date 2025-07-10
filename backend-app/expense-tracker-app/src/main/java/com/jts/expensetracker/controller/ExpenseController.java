@@ -1,5 +1,6 @@
 package com.jts.expensetracker.controller;
 
+import com.jts.expensetracker.model.CreateExpenseRequest;
 import com.jts.expensetracker.model.Expense;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,13 +24,13 @@ public class ExpenseController {
 
 	@PostMapping
 	@Operation(summary = "Create a new expense")
-	public ResponseEntity<Expense> addExpense(@RequestBody ExpenseDto expenseDto) {
-		Expense saved = expenseService.addExpense(expenseDto);
-//		Long expenseId = expenseService.addExpense(expenseDto);
+	public ResponseEntity<ExpenseDto> addExpense(@RequestBody CreateExpenseRequest request) {
+		ExpenseDto  saved = expenseService.addExpense(request);
+//		ExpenseDto dto = mapToDto(saved); // implement this or use a mapper like ModelMapper or MapStruct
 		return ResponseEntity.ok(saved);
 	}
 
-	@PutMapping("/id/{id}")
+	@PutMapping("/{userName}/{id}")
 	@Operation(summary = "Update the expense by Id")
 	public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody ExpenseDto updatedExpense) {
 		Expense expense = expenseService.updateExpense(id, updatedExpense);
@@ -43,10 +44,10 @@ public class ExpenseController {
 		return expenseService.getAllExpenses();
 	}
 
-	@GetMapping("/id/{id}")
-	@Operation(summary = "Get the expense by Id")
-	public ExpenseDto getExpense(@PathVariable Long id) {
-		return expenseService.getExpense(id);
+	@GetMapping("/{userName}")
+	@Operation(summary = "Get the expense by username")
+	public List<ExpenseDto> getExpense(@PathVariable String userName) {
+		return expenseService.getExpensesByUsername(userName);
 	}
 
 	@DeleteMapping("/{id}")

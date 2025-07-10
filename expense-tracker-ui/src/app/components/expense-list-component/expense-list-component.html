@@ -1,6 +1,6 @@
-<h2>Expenses</h2>
-<a routerLink="add" mat-raised-button color="primary">Add Expense</a>
-<table mat-table [dataSource]="dataSource">
+
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 expense-table">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
         <td mat-cell *matCellDef="let expense"> {{expense.id}} </td>
@@ -46,15 +46,26 @@
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator [length]="totalRecords"
-               [pageSize]="5"
-               [pageSizeOptions]="[5, 10, 20, 50, 100]"
-               showFirstLastButtons>
-</mat-paginator>
+  </table>
+
+  <button
+  mat-fab
+  color="primary"
+  class="add-expense-fab"
+  (click)="openAddExpenseDialog()">
+  <mat-icon>add</mat-icon>
+</button>
+
+  <mat-paginator class="mat-paginator"
+    [length]="totalRecords"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
 
 
-<p>
+<!-- <p>
 <a href="http://localhost:8080/swagger-ui/index.html" target="_blank">API Docs</a>
 </p>
 <h2>Optional Enhancements</h2>
@@ -69,4 +80,4 @@ Add Toast notifications<br>
 Add Filter by category/date<br>
 <p>
 <a href="http://localhost:8080/actuator/health" target="_blank">Health Check</a>
-</p>
+</p> -->

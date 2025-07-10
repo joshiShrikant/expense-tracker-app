@@ -1,0 +1,74 @@
+
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 400px;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: #ffffffd9;
+  backdrop-filter: blur(6px);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #3f51b5;
+  font-size: 13px;
+}
+
+.social-login {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-login p {
+  margin-bottom: 8px;
+  color: #444;
+  font-weight: 500;
+}
+
+.social-login button {
+  margin: 4px;
+  width: 140px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

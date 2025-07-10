@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body {  height: 100%; }
+body .main-content {
+   height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* styles.css */
@@ -23,6 +29,47 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #e0e0e0;
 }
 
+.dark-theme .mat-toolbar {
+  background-color: #253141;
+  color: #e0e0e0;
+}
+
+html .dark-theme .main-content {
+  background: linear-gradient(to right, #5f6161, #1e1e3d);
+  color:  #e0e0e0;
+}
+
+.dark-theme th {
+  color:  #e0e0e0;
+}
+
+.dark-theme td {
+  color:  #e0e0e0;
+}
+.dark-theme .mat-card {
+   color: #e0e0e0;
+}
+.dark-theme .mat-paginator {
+  color: #e0e0e0;
+}
+.dark-theme .mat-form-field {
+  color: #e0e0e0;
+}
+
+.dark-theme .mat-toolbar {
+    background-color: #253141;
+    color: #e0e0e0;
+}
+.dark-theme td button {
+    color: #e0e0e0;
+}
+
+
+.light-theme .mat-toolbar {
+    background-color: #3683d1;
+    color: white;
+}
+
 .light-theme {
   background-color: #fafafa;
   color: #212121;
@@ -30,12 +77,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .light-theme body {
   background-color: #fafafa;
   color: #212121;
-}
-.dark-theme .mat-toolbar {
-  background-color: #1f1f1f;
-  color: #e0e0e0;
-}
-.light-theme .mat-toolbar {
-    background-color: #1976d2;
-    color: white;
 }

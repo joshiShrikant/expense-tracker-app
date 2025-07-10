@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-component',
@@ -18,7 +19,11 @@ export class RegisterComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -34,6 +39,9 @@ export class RegisterComponent implements OnInit {
         next: (res) => {
           this.successMessage = 'User registered successfully!';
           this.errorMessage = '';
+          window.alert('Registration successful! You can now log in.');
+          this.registerForm.reset(); // Reset the form after successful registration
+          this.router.navigate(['/login']); // redirect to login page
         },
         error: (err) => {
           this.errorMessage = 'Registration failed!';

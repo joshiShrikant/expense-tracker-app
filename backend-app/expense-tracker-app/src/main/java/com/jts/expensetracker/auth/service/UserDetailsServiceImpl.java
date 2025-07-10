@@ -1,6 +1,6 @@
 package com.jts.expensetracker.auth.service;
 
-import com.jts.expensetracker.model.UserEntity;
+import com.jts.expensetracker.model.User;
 import com.jts.expensetracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
@@ -14,13 +14,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepo.findByUsername(username)
+        User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return User.builder()
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .roles("USER") // or load roles dynamically
+                .disabled(!user.isEnabled())
                 .build();
     }
 }

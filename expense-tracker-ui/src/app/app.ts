@@ -23,9 +23,12 @@ constructor(private auth: AuthService, private router: Router) {
 
   getUserDetails() {
     const token = localStorage.getItem('accessToken');
+    this.isLoggedIn = token ? true : false;
     if (token) {
       this.auth.getUserDetails().subscribe({
         next: (res) => {
+          console.log('User details fetched successfully:', res);
+          
           this.userDetails = res;
         },
         error: (err) => {

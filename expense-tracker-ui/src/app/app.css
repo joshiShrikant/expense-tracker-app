@@ -37,10 +37,6 @@ a.mat-button.active-link {
   background-color: #1976d2;
 }
 
-.main-content {
-  padding: 24px;
-}
-
 mat-toolbar {
   position: sticky;
   top: 0;
@@ -83,3 +79,15 @@ body.dark-theme mat-card {
 body.light-theme mat-card {
   background-color: white;
 }
+
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+

@@ -4,7 +4,7 @@ import com.jts.expensetracker.auth.dto.LoginRequest;
 import com.jts.expensetracker.auth.dto.LoginResponse;
 import com.jts.expensetracker.auth.dto.RegisterRequest;
 import com.jts.expensetracker.auth.service.JwtService;
-import com.jts.expensetracker.model.UserEntity;
+import com.jts.expensetracker.model.User;
 import com.jts.expensetracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,24 +41,29 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Authenticates the user and returns a JWT token.
-     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            // Authenticate user credentials
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Load user details and generate JWT
             UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
+
             String token = jwtService.generateToken(user);
 
-            return ResponseEntity.ok(new LoginResponse(token));
+            UserDetails userResponse = org.springframework.security.core.userdetails.User.builder()
+                    .username(user.getUsername())
+                    .password("********")
+                    .roles(user.getAuthorities().stream()
+                            .map(auth -> auth.getAuthority().replace("ROLE_", "")) // removes ROLE_ prefix
+                            .toArray(String[]::new))
+                    .disabled(!user.isEnabled())
+                    .build();
+
+            return ResponseEntity.ok(new LoginResponse(token, userResponse));
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body("Invalid credentials");
@@ -67,24 +72,19 @@ public class AuthController {
         }
     }
 
-    /**
-     * Optional: Clears Spring Security context (not necessary for JWT but useful).
-     */
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Logged out successfully");
     }
 
-    // ✅ Register API
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        System.out.println("Register endpoint hit"); // just for debug
+        System.out.println("Register endpoint hit");
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Username already exists");
         }
-        // 1. Save the new user
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
@@ -92,20 +92,17 @@ public class AuthController {
         user.setEnabled(true);
         userRepository.save(user);
 
-        // Wrap UserEntity in a UserDetails object
-        UserDetails userDetails = new User(
-                user.getUsername(),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-        );
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password("********")
+                .roles(user.getRole())
+                .disabled(!user.isEnabled())
+                .build();
 
-        // 2. Generate JWT token
         String token = jwtService.generateToken(userDetails);
 
-        // 3. Return token
-        LoginResponse response = new LoginResponse(token);
+        LoginResponse response = new LoginResponse(token, userDetails);
         return ResponseEntity.ok(response);
-//    return ResponseEntity.ok("User registered successfully");
     }
 
     @GetMapping("/user/{username}")
@@ -134,15 +131,15 @@ public class AuthController {
         }
 
         String username = jwtService.extractUsername(refreshToken);
-        UserEntity user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // Wrap UserEntity in a UserDetails object
-        UserDetails userDetails = new User(
-                user.getUsername(),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-        );
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole())
+                .disabled(!user.isEnabled())
+                .build();
 
         String newAccessToken = jwtService.generateToken(userDetails);
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);
@@ -155,8 +152,6 @@ public class AuthController {
         return ResponseEntity.ok(tokens);
     }
 
-
-    // ✅ Deregister API
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         return userRepository.findByUsername(username).map(user -> {
@@ -164,6 +159,4 @@ public class AuthController {
             return ResponseEntity.ok("User deleted successfully");
         }).orElse(ResponseEntity.notFound().build());
     }
-
-
 }

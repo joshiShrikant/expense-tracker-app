@@ -55,7 +55,10 @@ ngAfterViewInit(): void {
     }
   }
 
-
+openAddExpenseDialog() {
+  // navigate to a form route
+  this.router.navigate(['/add-expense']);
+}
   
 }
 

@@ -25,9 +25,11 @@ onLogin(): void {
   const { username, password } = this.form.value;
   this.auth.login(username, password).subscribe({
     next: (res) => {
+          
       localStorage.setItem('token', res.token);
       localStorage.setItem('accessToken', res.token);
       localStorage.setItem('refreshToken', res.refreshToken);
+      localStorage.setItem('username', username);
       this.router.navigate(['/dashboard']);
     },
     error: () => alert('Login failed')

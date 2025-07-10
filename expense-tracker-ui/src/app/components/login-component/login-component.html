@@ -1,14 +1,46 @@
-<form [formGroup]="form" (ngSubmit)="onLogin()">
-  <mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput formControlName="username" required />
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password" required />
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Login</button>
-  </mat-card>
-</form>
+<div class="login-container">
+  <form [formGroup]="form" (ngSubmit)="onLogin()">
+    <mat-card class="login-card">
+      <mat-card-title class="login-title">Login</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Username</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="username" required />
+          <mat-error *ngIf="form.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput type="password" formControlName="password" required />
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="forgot-password">
+          <a routerLink="/forgot-password">Forgot password?</a>
+        </div>
+
+        <div class="button-wrapper">
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Login
+          </button>
+        </div>
+
+        <div class="social-login">
+          <p>Or login with</p>
+          <button mat-stroked-button color="warn">
+            <mat-icon>google</mat-icon>&nbsp; Google
+          </button>
+          <button mat-stroked-button color="primary">
+            <mat-icon>facebook</mat-icon>&nbsp; Facebook
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

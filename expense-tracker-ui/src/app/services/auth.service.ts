@@ -48,10 +48,10 @@ export class AuthService {
 
   getUserDetails(): Observable<any> {
     const token = this.getToken();
+    const username = localStorage.getItem('username');
+    
     if (token) {
-      return this.http.get(`${this.apiUrl}/user`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      return this.http.get(`${this.apiUrl}/user/${username}`);
     } else {
       return new Observable(observer => {
         observer.error('No token found');
