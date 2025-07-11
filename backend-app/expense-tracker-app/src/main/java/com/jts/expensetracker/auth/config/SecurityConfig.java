@@ -42,14 +42,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/register",
-                                "/register",    // registration endpoint
+                                "/register",
                                 "/api/auth/login",
-                                "/api/auth/**", // login endpoint
+                                "/api/auth/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/webjars/**",
-                                "/swagger-resources/**"
+                                "/swagger-resources/**",
+                                "/error",
+                                "health"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
