@@ -18,7 +18,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private DashboardRepository dashboardRepository;
 
-//    for all expenses
+    //    for all expenses
     @Override
     public DashboardSummary getSummary() {
         List<Expense> expenses = dashboardRepository.findAllExpenses();

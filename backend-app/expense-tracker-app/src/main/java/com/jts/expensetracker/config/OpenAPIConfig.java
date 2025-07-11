@@ -18,19 +18,19 @@ import org.springframework.context.annotation.Configuration;
         )
 )
 public class OpenAPIConfig {
-        @Bean
-        public OpenAPI customOpenAPI() {
-                return new OpenAPI()
-                        .info(new io.swagger.v3.oas.models.info.Info()
-                                .title("Expense Tracker API")
-                                .version("1.0")
-                                .description("API documentation for Expense Tracker App"))
-                        .components(new Components()
-                                .addSecuritySchemes("BearerAuth",
-                                        new SecurityScheme()
-                                                .type(SecurityScheme.Type.HTTP)
-                                                .scheme("bearer")
-                                                .bearerFormat("JWT")))
-                        .addSecurityItem(new SecurityRequirement().addList("BearerAuth"));
-        }
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new io.swagger.v3.oas.models.info.Info()
+                        .title("Expense Tracker API")
+                        .version("1.0")
+                        .description("API documentation for Expense Tracker App"))
+                .components(new Components()
+                        .addSecuritySchemes("BearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")))
+                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"));
+    }
 }

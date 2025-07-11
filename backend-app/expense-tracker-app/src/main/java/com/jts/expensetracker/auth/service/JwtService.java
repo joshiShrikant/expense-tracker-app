@@ -22,7 +22,6 @@ public class JwtService {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
-    // ✅ Generate JWT token
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -32,7 +31,6 @@ public class JwtService {
                 .compact();
     }
 
-    // ✅ Extract username from token
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -42,13 +40,11 @@ public class JwtService {
                 .getSubject();
     }
 
-    // ✅ Check if token is valid
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    // ✅ Check if token has expired
     private boolean isTokenExpired(String token) {
         Date expiration = Jwts.parserBuilder()
                 .setSigningKey(key)

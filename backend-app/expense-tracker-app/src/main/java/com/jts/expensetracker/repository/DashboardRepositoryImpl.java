@@ -21,7 +21,6 @@ public class DashboardRepositoryImpl implements DashboardRepository {
         return expenseRepository.findAll();
     }
 
-
     @Override
     public List<Expense> findExpensesByUsername(String username) {
         User user = userRepository.findByUsername(username)

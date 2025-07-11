@@ -10,5 +10,5 @@ public class RegisterRequest {
     private String password;
     private String email;
     private String role; // e.g., "USER", "ADMIN"
-    private boolean enabled = true; // Default to true, can be set to false for account activation
+    private boolean enabled = true;
 }

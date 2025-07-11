@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface DashboardRepository {
     List<Expense> findAllExpenses();
+
     List<Expense> findExpensesByUsername(String username);
 }

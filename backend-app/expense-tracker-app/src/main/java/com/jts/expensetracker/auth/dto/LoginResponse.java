@@ -1,6 +1,5 @@
 package com.jts.expensetracker.auth.dto;
 
-import com.jts.expensetracker.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;

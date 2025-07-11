@@ -1,13 +1,9 @@
 package com.jts.expensetracker.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -18,22 +14,22 @@ import lombok.Setter;
 @Table(name = "expense")
 public class Expense {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
-	
-	private String expenseName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-	private String expenseDate;
+    private String expenseName;
 
-	private BigDecimal expenseAmount;
+    private String expenseDate;
 
-	private String mainCategory;
+    private BigDecimal expenseAmount;
 
-	private String subCategory;
+    private String mainCategory;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+    private String subCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }
