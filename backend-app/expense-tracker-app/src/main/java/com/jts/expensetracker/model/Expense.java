@@ -16,7 +16,7 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long expenseId;
 
     private String expenseName;
 

@@ -25,6 +25,15 @@
   margin-bottom: 16px;
 }
 
+.login-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  margin-right: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
 .full-width {
   width: 100%;
 }
@@ -35,15 +44,21 @@
 }
 
 .forgot-password {
-  text-align: right;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end; /* aligns to the left */
+  padding: 0 16px;
+  margin-top: 0px;
 }
 
-.forgot-password a {
+.link-btn {
+  color: #1976d2;
   text-decoration: none;
-  color: #3f51b5;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
 }
 
 .social-login {
@@ -71,4 +86,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.register-btn {
+  font-size: 0.75rem; /* smaller font size */
+  padding: 4px 5px;  /* smaller padding */
+  height: 16px;       /* reduce height */
 }

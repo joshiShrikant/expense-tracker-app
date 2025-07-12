@@ -17,12 +17,15 @@ export class ExpenseService {
     return this.http.post<Expense>(this.baseUrl, expense);
   }
 
-  update(id: number, expense: Expense): Observable<Expense> {
-    return this.http.put<Expense>(`${this.baseUrl}/${id}`, expense);
+  update(expenseId: number, expense: Expense): Observable<Expense> {
+    const username = localStorage.getItem('username');
+    console.log("/expenses/edit",expense);
+    
+    return this.http.put<Expense>(`${this.baseUrl}/edit/${username}/${expenseId}`, expense);
   }
 
-  getById(id: number) {
-  return this.http.get<Expense>(`${this.baseUrl}/${id}`);
+  getByUsernameAndId(username: string, id: number) {
+  return this.http.get<Expense>(`${this.baseUrl}/${username}/${id}`);
   }
   
   delete(id: number): Observable<void> {

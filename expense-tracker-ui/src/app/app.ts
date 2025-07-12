@@ -1,9 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatModule } from './mat.module';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,31 +12,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
    isDarkMode = false;
   protected title = 'expense-tracker-ui';
   isLoggedIn = false;
   userDetails : any = {};
 
   
-constructor(private auth: AuthService, private router: Router) {
+constructor(
+  private auth: AuthService,
+  private router: Router,
+  private cdRef: ChangeDetectorRef,
+  private userService: UserService
+) {
 }
-
   getUserDetails() {
-    const token = localStorage.getItem('accessToken');
-    this.isLoggedIn = token ? true : false;
-    if (token) {
-      this.auth.getUserDetails().subscribe({
-        next: (res) => {
-          console.log('User details fetched successfully:', res);
-          
-          this.userDetails = res;
-        },
-        error: (err) => {
-          console.error('Error fetching user details:', err);
-        }
-      });
-    }
+     this.userService.userDetails$.subscribe((data) => {
+      this.userDetails = data?.user;
+      console.log('Updated user:', data?.user, this.userDetails.username);
+      this.isLoggedIn = !!this.userDetails.username;
+      this.cdRef.detectChanges(); // Ensure the view is updated with the new user details
+    });
   }
 
     toggleTheme(): void {
@@ -60,7 +57,8 @@ constructor(private auth: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-
+    console.log('App component initialized');
+    
     this.getUserDetails();
     this.setInitialTheme();
     this.isUserLoggedIn()
@@ -70,5 +68,4 @@ constructor(private auth: AuthService, private router: Router) {
   this.auth.logout();
   this.router.navigate(['/login']);
 }
-
 }

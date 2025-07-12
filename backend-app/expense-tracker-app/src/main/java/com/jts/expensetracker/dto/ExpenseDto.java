@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Builder
 public class ExpenseDto {
 
-    private Long id;
+    private Long expenseId;
 
     private String expenseName;
 

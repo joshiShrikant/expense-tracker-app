@@ -10,9 +10,11 @@ public interface ExpenseService {
 
     ExpenseDto addExpense(CreateExpenseRequest request);
 
-    Expense updateExpense(Long id, ExpenseDto expenseDto);
+    ExpenseDto updateExpense(Long id, ExpenseDto expenseDto);
 
     List<ExpenseDto> getExpensesByUsername(String username);
+
+    Expense getExpenseByUserAndId(String username, Long id);
 
     List<ExpenseDto> getAllExpenses();
 
@@ -20,3 +22,4 @@ public interface ExpenseService {
 
     List<Expense> getExpensesForCurrentUser();
 }
+

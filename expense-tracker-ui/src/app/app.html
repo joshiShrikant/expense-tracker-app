@@ -1,19 +1,19 @@
 <mat-toolbar color="primary" class="navbar">
+  <div class="nav-left">
   <span class="logo" routerLink="/" style="cursor: pointer;">💰 Expense Tracker</span>
-  
-  <span class="spacer"></span>
-
- <a mat-button style="color: aliceblue;" routerLink="/dashboard"><mat-icon>dashboard</mat-icon>&nbsp;Dashboard</a>
+ </div>
+ <div class="nav-right" *ngIf="isLoggedIn">
+  <a mat-button style="color: aliceblue;" routerLink="/dashboard"><mat-icon>dashboard</mat-icon>&nbsp;Dashboard</a>
 <a mat-button style="color: aliceblue;" routerLink="/expenses"><mat-icon>list</mat-icon>&nbsp;Expenses</a>
-<a mat-button style="color: aliceblue;" routerLink="/expenses/add"><mat-icon>add</mat-icon>&nbsp;Add</a>
- <div *ngIf="isLoggedIn" class="user-info">
+<a mat-button style="color: aliceblue;" routerLink="/expenses/add"><mat-icon>add</mat-icon>&nbsp;Add</a> 
+</div>
+<div *ngIf="isLoggedIn" class="user-info">
    <span>{{ userDetails.username | uppercase }}</span>
    <button mat-button style="color: aliceblue;" (click)="logout()">Logout</button>
 </div>
 <div *ngIf="!isLoggedIn" class="user-info">
   <button mat-button routerLink="/login">Login</button>
 </div>
- 
  <mat-icon>light_mode</mat-icon>
   <mat-slide-toggle [checked]="isDarkMode" (change)="toggleTheme()">
   </mat-slide-toggle>

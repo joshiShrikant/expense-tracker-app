@@ -51,22 +51,33 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Expense updateExpense(Long id, ExpenseDto expenseDto) {
-        if (expenseDto.getId() == null) {
+    public ExpenseDto updateExpense(Long id, ExpenseDto expenseDto) {
+        expenseDto.setExpenseId(id);
+        if (expenseDto.getExpenseId() == null) {
             throw new IllegalArgumentException("Expense ID is required");
         }
 
-        Expense savedExpense = expenseRepository.findById(expenseDto.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Cannot Find Expense by ID %s", expenseDto.getId())));
+        Expense oldExpense = expenseRepository.findById(expenseDto.getExpenseId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Cannot Find Expense by ID %s", expenseDto.getExpenseId())));
 
         Expense expense = mapFromDto(expenseDto);
 
-        savedExpense.setExpenseName(expense.getExpenseName());
-        savedExpense.setMainCategory(expense.getMainCategory());
-        savedExpense.setSubCategory(expense.getSubCategory());
-        savedExpense.setExpenseAmount(expense.getExpenseAmount());
+        oldExpense.setExpenseName(expense.getExpenseName());
+        oldExpense.setMainCategory(expense.getMainCategory());
+        oldExpense.setSubCategory(expense.getSubCategory());
+        oldExpense.setExpenseAmount(expense.getExpenseAmount());
+        oldExpense.setExpenseDate(expense.getExpenseDate());
 
-        return expenseRepository.save(savedExpense);
+        Expense savedExpense = expenseRepository.save(oldExpense);
+
+        return ExpenseDto.builder()
+                .expenseId(savedExpense.getExpenseId())
+                .expenseName(savedExpense.getExpenseName())
+                .mainCategory(savedExpense.getMainCategory())
+                .subCategory(savedExpense.getSubCategory())
+                .expenseAmount(savedExpense.getExpenseAmount())
+                .expenseDate(savedExpense.getExpenseDate())
+                .build();
     }
 
     @Override
@@ -77,6 +88,25 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<Expense> expenses = expenseRepository.findByUserUsername(user.getUsername());
         return expenses.stream().map(this::mapToDto).toList();
     }
+
+
+    @Override
+    public Expense getExpenseByUserAndId(String username, Long id) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        Expense expense = expenseRepository.findByUserUsernameAndExpenseId(user.getUsername(), id);
+
+        if (expense != null) {
+            return expense;
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    String.format("Expense with ID %s not found for user %s", id, username)
+            );
+        }
+    }
+    
 
     @Override
     public List<ExpenseDto> getAllExpenses() {
@@ -109,7 +139,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     private ExpenseDto mapToDto(Expense expense) {
         return ExpenseDto.builder()
-                .id(expense.getId())
+                .expenseId(expense.getExpenseId())
                 .expenseName(expense.getExpenseName())
                 .mainCategory(expense.getMainCategory())
                 .subCategory(expense.getSubCategory())

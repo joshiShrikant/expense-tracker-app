@@ -47,14 +47,17 @@ export class ExpenseFormComponent implements OnInit {
   }
 
   checkAndLoadExpense(){
+    const username = localStorage.getItem('username');
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
         this.isEditMode = true;
         this.expenseId = +idParam;
-        this.expenseService.getById(this.expenseId).subscribe(expense => {
-          this.form.patchValue(expense);
-        });
+        if (username) {
+          this.expenseService.getByUsernameAndId(username, this.expenseId).subscribe(expense => {
+            this.form.patchValue(expense);
+          });
+        }
       }
     });
   }
@@ -67,6 +70,7 @@ export class ExpenseFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.checkAndLoadExpense();
     this.loadMainCategories();
     this.initializeForm();

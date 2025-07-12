@@ -26,17 +26,8 @@ public class ExpenseController {
     @Operation(summary = "Create a new expense")
     public ResponseEntity<ExpenseDto> addExpense(@RequestBody CreateExpenseRequest request) {
         ExpenseDto saved = expenseService.addExpense(request);
-//		ExpenseDto dto = mapToDto(saved); // implement this or use a mapper like ModelMapper or MapStruct
         return ResponseEntity.ok(saved);
     }
-
-    @PutMapping("/{userName}/{id}")
-    @Operation(summary = "Update the expense by Id")
-    public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody ExpenseDto updatedExpense) {
-        Expense expense = expenseService.updateExpense(id, updatedExpense);
-        return ResponseEntity.ok(expense);
-    }
-
 
     @GetMapping
     @Operation(summary = "Get all expenses")
@@ -45,9 +36,23 @@ public class ExpenseController {
     }
 
     @GetMapping("/{userName}")
-    @Operation(summary = "Get the expense by username")
-    public List<ExpenseDto> getExpense(@PathVariable String userName) {
+    @Operation(summary = "Get all expenses by username")
+    public List<ExpenseDto> getExpenses(@PathVariable String userName) {
         return expenseService.getExpensesByUsername(userName);
+    }
+
+    @GetMapping("/{username}/{id}")
+    @Operation(summary = "Get the expense by userName and Id")
+    public ResponseEntity<Expense> getExpenseByUserAndId(@PathVariable String username, @PathVariable Long id) {
+        Expense expense = expenseService.getExpenseByUserAndId(username, id);
+        return ResponseEntity.ok(expense);
+    }
+
+    @PutMapping("/edit/{userName}/{id}")
+    @Operation(summary = "Update the expense by userName and Id")
+    public ResponseEntity<ExpenseDto> updateExpense(@PathVariable Long id, @RequestBody ExpenseDto updatedExpense) {
+        ExpenseDto expense = expenseService.updateExpense(id, updatedExpense);
+        return ResponseEntity.ok(expense);
     }
 
     @DeleteMapping("/{id}")

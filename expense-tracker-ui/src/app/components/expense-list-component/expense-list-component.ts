@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Expense } from '../../models/expense.model';
 import { ExpenseService } from '../../services/expense.service';
 import { CommonModule } from '@angular/common';
@@ -15,25 +15,28 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./expense-list-component.css']
 })
 export class ExpenseListComponent implements OnInit {
- 
+
   displayedColumns: string[] = ['id', 'Expense Name', 'amount', 'mainCategory', 'subCategory', 'date', 'actions'];
-  
+
   dataSource = new MatTableDataSource<any>();
 
   totalRecords = 0;
 
-@ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-ngAfterViewInit(): void {
-  this.dataSource.paginator = this.paginator;
-}
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.cdRef.detectChanges(); // Ensure paginator is initialized after view is rendered
+  }
 
   constructor(
     private expenseService: ExpenseService,
-    private router: Router) {}
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.loadExpenses();    
+    this.loadExpenses();
   }
 
   loadExpenses() {
@@ -43,7 +46,7 @@ ngAfterViewInit(): void {
     });
   }
 
-   editExpense(id: number) {
+  editExpense(id: number) {
     this.router.navigate(['/expenses/edit', id]);
   }
 
@@ -55,10 +58,10 @@ ngAfterViewInit(): void {
     }
   }
 
-openAddExpenseDialog() {
-  // navigate to a form route
-  this.router.navigate(['/add-expense']);
-}
-  
-}
+  openAddExpenseDialog() {
+    // navigate to a form route
+    this.router.navigate(['/expenses/add']);
 
+  }
+
+}

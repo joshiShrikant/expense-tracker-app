@@ -20,13 +20,18 @@
             Password is required
           </mat-error>
         </mat-form-field>
-
-        <div class="forgot-password">
-          <a routerLink="/forgot-password">Forgot password?</a>
-        </div>
-
+         <div class="forgot-password">
+          <a [routerLink]="['/forgot-password']" class="link-btn"
+            >Forgot password?</a
+          >
+         </div>
         <div class="button-wrapper">
-          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid"
+          >
             Login
           </button>
         </div>
@@ -41,6 +46,13 @@
           </button>
         </div>
       </mat-card-content>
+
+      <mat-card-footer class="login-footer">
+        <p>
+          Don't have an account?
+          <a [routerLink]="['/register']" class="register-btn">Register</a>
+        </p>
+      </mat-card-footer>
     </mat-card>
   </form>
 </div>

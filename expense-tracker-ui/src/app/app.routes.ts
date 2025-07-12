@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
 import { LoginComponent } from './components/login-component/login-component';
+import { RegisterComponent } from './components/register-component/register-component';
+import { ForgotPasswordComponent } from './components/forgot-password-component/forgot-password-component';
 
 export const routes: Routes = [
   {
@@ -8,10 +10,12 @@ export const routes: Routes = [
     redirectTo: 'expenses',
     pathMatch: 'full'
   },
-{
-  path: 'register',
-  loadComponent: () => import('./components/register-component/register-component').then(m => m.RegisterComponent)
-},
+// {
+//   path: 'register',
+//   loadComponent: () => import('./components/register-component/register-component').then(m => m.RegisterComponent)
+// },
+{ path: 'register', component: RegisterComponent },
+ { path: 'forgot-password', component: ForgotPasswordComponent },
 { path: 'login', component: LoginComponent },
   {
     path: 'expenses',
